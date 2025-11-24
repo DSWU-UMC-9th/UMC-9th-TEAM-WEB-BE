@@ -7,63 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id         String   @id
   email      String?  @db.VarChar(255)
   pass       String?  @db.VarChar(255)
   nickname   String?  @db.VarChar(255)
-  created_at String?  @db.VarChar(255)
-  updated_at String?  @db.VarChar(255)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updated_at DateTime? @updatedAt  @map("updated_at")
 
-  user_book user_book[]
+  userBooks UserBook[]
+  @@map("user")
 }
 
-model book {
-  id         String   @id
-  title      String?  @db.VarChar(255)
-  author     String?  @db.VarChar(255)
-  img_url    String?  @db.VarChar(255)
-  created_at String?  @db.VarChar(255)
-  updated_at String?  @db.VarChar(255)
+model Book {
+  id        Int       @id @default(autoincrement())
+  title     String
+  author    String
+  imgUrl    String?   @map("img_url")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt      @map("updated_at")
 
-  user_book user_book[]
+  userBooks UserBook[]
+
+  @@map("book")  
 }
 
-model keyword {
-  id    String   @id
-  name  String?  @db.VarChar(255)
+model UserBook {
+  id            Int       @id @default(autoincrement())
+  bookId        Int       @map("book_id")
+  userId        Int       @map("user_id")
+  pageCount     Int?      @map("page_count")
+  readingMinutes Int?     @map("reading_minutes")
+  sentence      String?
+  note          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt      @map("updated_at")
 
-  user_book_keyword user_book_keyword[]
+  // relations
+  book Book @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  keywords UserBookKeyword[]
+
+  @@map("user_book")
+  @@index([bookId])
+  @@index([userId])
 }
 
-model user_book {
-  id              String   @id
-  book_id         String
-  user_id         String
-  page_count      String?  @db.VarChar(255)
-  reading_minutes String?  @db.VarChar(255)
-  keywords        String?  @db.VarChar(255)
-  sentence        String?  @db.VarChar(255)
-  note            String?  @db.VarChar(255)
-  img_url         String?  @db.VarChar(255)
-  created_at      String?  @db.VarChar(255)
-  updated_at      String?  @db.VarChar(255)
-
-  book  book @relation(fields: [book_id], references: [id])
-  user  user @relation(fields: [user_id], references: [id])
-  user_book_keyword user_book_keyword[]
+model Keyword {
+  id      Int               @id @default(autoincrement())
+  name    String            @unique
+  userBooks UserBookKeyword[]
+  
+  @@map("keyword")
 }
 
-model user_book_keyword {
-  id           String
-  user_book_id String
-  keyword_id   String
+model UserBookKeyword {
+  id          Int       @id @default(autoincrement())
+  userBookId  Int       @map("user_book_id")
+  keywordId   Int       @map("keyword_id")
 
-  @@id([id, user_book_id, keyword_id])
+  userBook    UserBook  @relation(fields: [userBookId], references: [id])
+  keyword     Keyword   @relation(fields: [keywordId], references: [id])
 
-  user_book user_book @relation(fields: [user_book_id], references: [id])
-  keyword   keyword   @relation(fields: [keyword_id], references: [id])
+  @@map("user_book_keyword")
+  @@unique([userBookId, keywordId]) // 동일 키워드 중복 선택 방지
 }
+
+
 
 
 

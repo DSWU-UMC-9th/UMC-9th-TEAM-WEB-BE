@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import swaggerAutogen from "swagger-autogen";
 import swaggerUiExpress from "swagger-ui-express";
+import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from './controllers/library.controller.js';
 
 import userRouter from "./routes/user.routes.js";
 dotenv.config();
@@ -55,3 +56,9 @@ app.get("/openapi.json", async (req, res, next) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+app.get("/api/v1/library", handleListUserBooks)
+app.post("/api/v1/library", handleAddUserBook)
+app.get("/api/v1/library/:userBookId", handleDetailUserBook)
+app.patch("/api/v1/library/:userBookId", handleUpdateUserBook)
+app.delete("/api/v1/library/:userBookId", handleDeleteUserBook)
