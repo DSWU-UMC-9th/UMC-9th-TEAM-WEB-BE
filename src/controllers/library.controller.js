@@ -4,7 +4,7 @@ import { bodyToCreateUserBook, bodyToUpdateUserBook, userBookDetailToResponse, u
 
 export const handleAddUserBook = async (req, res, next) => {
   try {
-    const userId = Number(req.body.userId);
+    const userId = req.body.userId;
     if (!userId) throw new Error("userId가 필요합니다.");
 
     const dto = bodyToCreateUserBook(req.body);
@@ -18,7 +18,7 @@ export const handleAddUserBook = async (req, res, next) => {
 
 export const handleListUserBooks = async(req, res, next) => {
     try{
-        const userId = Number(req.body.userId);
+        const userId = req.body.userId;
         if (!userId) throw new Error("userId가 필요합니다.");
         const list = await listMyLibrary(userId);
         return res.status(StatusCodes.OK).json(userBooksToResponse(list));
@@ -29,7 +29,7 @@ export const handleListUserBooks = async(req, res, next) => {
 
 export const handleDetailUserBook = async (req, res, next) => {
     try{
-        const userId = Number(req.body.userId);
+        const userId = req.body.userId;
         if (!userId) throw new Error("userId가 필요합니다.");
         const userBookId = Number(req.params.userBookId);
         if (!userBookId) throw new Error("userBookId가 필요합니다.");
@@ -43,7 +43,7 @@ export const handleDetailUserBook = async (req, res, next) => {
 
 export const handleDeleteUserBook = async (req, res, next) => {
     try {
-        const userId = Number(req.body.userId);
+        const userId = req.body.userId;
         if (!userId) throw new Error("userId가 필요합니다.");        
         const userBookId = Number(req.params.userBookId);
 
@@ -56,7 +56,7 @@ export const handleDeleteUserBook = async (req, res, next) => {
 
 export const handleUpdateUserBook = async (req, res, next) => {
   try {
-        const userId = Number(req.body.userId);
+        const userId = req.body.userId;
         if (!userId) throw new Error("userId가 필요합니다.");
         const userBookId = Number(req.params.userBookId);
         const dto = bodyToUpdateUserBook(req.body);
