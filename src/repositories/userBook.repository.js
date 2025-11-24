@@ -9,7 +9,7 @@ export const getAllUserBooks= async (userId) => {
                 include: { keyword: true },
             }
         },
-        orderBy: {id: "desc"}
+        orderBy: {id: "asc"}
     })
     return list;
 }

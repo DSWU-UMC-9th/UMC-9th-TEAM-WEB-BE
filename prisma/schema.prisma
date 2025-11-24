@@ -12,7 +12,7 @@ model User {
   email      String?  @db.VarChar(255)
   pass       String?  @db.VarChar(255)
   nickname   String?  @db.VarChar(255)
-  createdAt DateTime  @default(now()) @map("created_at")
+  created_at DateTime  @default(now()) @map("created_at")
   updated_at DateTime? @updatedAt  @map("updated_at")
 
   userBooks UserBook[]
@@ -35,7 +35,7 @@ model Book {
 model UserBook {
   id            Int       @id @default(autoincrement())
   bookId        Int       @map("book_id")
-  userId        Int       @map("user_id")
+  userId        String       @map("user_id")
   pageCount     Int?      @map("page_count")
   readingMinutes Int?     @map("reading_minutes")
   sentence      String?
