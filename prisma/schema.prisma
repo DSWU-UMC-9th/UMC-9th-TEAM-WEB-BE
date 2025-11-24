@@ -8,15 +8,14 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  password  String    
-  nickname  String    
+  id         String   @id
+  email      String?  @db.VarChar(255)
+  pass       String?  @db.VarChar(255)
+  nickname   String?  @db.VarChar(255)
   createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt      @map("updated_at")
+  updated_at DateTime? @updatedAt  @map("updated_at")
 
   userBooks UserBook[]
-
   @@map("user")
 }
 
@@ -74,4 +73,8 @@ model UserBookKeyword {
   @@map("user_book_keyword")
   @@unique([userBookId, keywordId]) // 동일 키워드 중복 선택 방지
 }
+
+
+
+
 

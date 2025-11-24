@@ -7,6 +7,7 @@ import swaggerAutogen from "swagger-autogen";
 import swaggerUiExpress from "swagger-ui-express";
 import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from './controllers/library.controller.js';
 
+import userRouter from "./routes/user.routes.js";
 dotenv.config();
 
 const app = express()
@@ -19,7 +20,7 @@ app.use(express.static('public'));
 app.use(express.json());                 
 app.use(express.urlencoded({ extended: false }));
 
-
+app.use("/api/v1/users", userRouter);
 
 app.use(
   "/docs",
