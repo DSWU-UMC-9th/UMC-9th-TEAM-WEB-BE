@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import swaggerAutogen from "swagger-autogen";
 import swaggerUiExpress from "swagger-ui-express";
 
+import userRouter from "./routes/user.routes.js";
 dotenv.config();
 
 const app = express()
@@ -18,7 +19,7 @@ app.use(express.static('public'));
 app.use(express.json());                 
 app.use(express.urlencoded({ extended: false }));
 
-
+app.use("/api/v1/users", userRouter);
 
 app.use(
   "/docs",
