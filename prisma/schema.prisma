@@ -6,3 +6,64 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model user {
+  id         String   @id
+  email      String?  @db.VarChar(255)
+  pass       String?  @db.VarChar(255)
+  nickname   String?  @db.VarChar(255)
+  created_at String?  @db.VarChar(255)
+  updated_at String?  @db.VarChar(255)
+
+  user_book user_book[]
+}
+
+model book {
+  id         String   @id
+  title      String?  @db.VarChar(255)
+  author     String?  @db.VarChar(255)
+  img_url    String?  @db.VarChar(255)
+  created_at String?  @db.VarChar(255)
+  updated_at String?  @db.VarChar(255)
+
+  user_book user_book[]
+}
+
+model keyword {
+  id    String   @id
+  name  String?  @db.VarChar(255)
+
+  user_book_keyword user_book_keyword[]
+}
+
+model user_book {
+  id              String   @id
+  book_id         String
+  user_id         String
+  page_count      String?  @db.VarChar(255)
+  reading_minutes String?  @db.VarChar(255)
+  keywords        String?  @db.VarChar(255)
+  sentence        String?  @db.VarChar(255)
+  note            String?  @db.VarChar(255)
+  img_url         String?  @db.VarChar(255)
+  created_at      String?  @db.VarChar(255)
+  updated_at      String?  @db.VarChar(255)
+
+  book  book @relation(fields: [book_id], references: [id])
+  user  user @relation(fields: [user_id], references: [id])
+  user_book_keyword user_book_keyword[]
+}
+
+model user_book_keyword {
+  id           String
+  user_book_id String
+  keyword_id   String
+
+  @@id([id, user_book_id, keyword_id])
+
+  user_book user_book @relation(fields: [user_book_id], references: [id])
+  keyword   keyword   @relation(fields: [keyword_id], references: [id])
+}
+
+
+
