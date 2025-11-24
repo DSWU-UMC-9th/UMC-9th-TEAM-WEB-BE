@@ -6,3 +6,72 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String    
+  nickname  String    
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt      @map("updated_at")
+
+  userBooks UserBook[]
+
+  @@map("user")
+}
+
+model Book {
+  id        Int       @id @default(autoincrement())
+  title     String
+  author    String
+  imgUrl    String?   @map("img_url")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt      @map("updated_at")
+
+  userBooks UserBook[]
+
+  @@map("book")  
+}
+
+model UserBook {
+  id            Int       @id @default(autoincrement())
+  bookId        Int       @map("book_id")
+  userId        Int       @map("user_id")
+  pageCount     Int?      @map("page_count")
+  readingMinutes Int?     @map("reading_minutes")
+  sentence      String?
+  note          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt      @map("updated_at")
+
+  // relations
+  book Book @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  keywords UserBookKeyword[]
+
+  @@map("user_book")
+  @@index([bookId])
+  @@index([userId])
+}
+
+model Keyword {
+  id      Int               @id @default(autoincrement())
+  name    String            @unique
+  userBooks UserBookKeyword[]
+  
+  @@map("keyword")
+}
+
+model UserBookKeyword {
+  id          Int       @id @default(autoincrement())
+  userBookId  Int       @map("user_book_id")
+  keywordId   Int       @map("keyword_id")
+
+  userBook    UserBook  @relation(fields: [userBookId], references: [id])
+  keyword     Keyword   @relation(fields: [keywordId], references: [id])
+
+  @@map("user_book_keyword")
+  @@unique([userBookId, keywordId]) // 동일 키워드 중복 선택 방지
+}
+
