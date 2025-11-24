@@ -1,7 +1,9 @@
 import express from "express";
 import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from "../controllers/library.controller.js";
-
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 const router = express.Router();
+
+router.use(authMiddleware);
 
 router.get("", handleListUserBooks)
 router.post("", handleAddUserBook)
