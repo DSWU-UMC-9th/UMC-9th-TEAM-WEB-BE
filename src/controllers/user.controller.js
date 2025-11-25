@@ -1,4 +1,4 @@
-import { signUp, login } from "../services/user.service.js";
+import { signUp, login, checkNickname } from "../services/user.service.js";
 
 export const handleSignUp = async (req, res, next) => {
     try {
@@ -28,5 +28,16 @@ export const handleLogin = async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+};
+export const handleCheckNickname = async (req, res) => {
+    const { nickname } = req.body;
+
+    const result = await checkNickname(nickname);
+
+    res.json({
+        resultType: "SUCCESS",
+        error: null,
+        success: { data: result },
+    });
 };
 
