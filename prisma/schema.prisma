@@ -35,7 +35,8 @@ model Book {
 model UserBook {
   id            Int       @id @default(autoincrement())
   bookId        Int       @map("book_id")
-  userId        String       @map("user_id")
+  userBookImg   String?   @map("img_url")
+  userId        String    @map("user_id")
   pageCount     Int?      @map("page_count")
   readingMinutes Int?     @map("reading_minutes")
   sentence      String?
