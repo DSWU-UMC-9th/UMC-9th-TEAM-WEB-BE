@@ -36,3 +36,22 @@ export const findBooksByKeyword = async (keywordName) => {
     distinct: ["id"],
   });
 };
+
+export const findBookWithRelations = async (bookId) => {
+  return prisma.book.findUnique({
+    where: { id: Number(bookId) },
+    include: {
+      sentences: {
+        select: { id: true, content: true },
+        orderBy: { id: 'asc' },
+      },
+      userBooks: {
+        select: {
+          keywords: {
+            select: { keyword: { select: { id: true, name: true } } },
+          },
+        },
+      },
+    },
+  });
+};
