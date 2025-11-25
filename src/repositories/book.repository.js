@@ -10,3 +10,29 @@ export const findAllBooks = async () => {
     },
   });
 };
+
+export const findBooksByKeyword = async (keywordName) => {
+  if (!keywordName) return [];
+  return await prisma.book.findMany({
+    where: {
+      userBooks: {
+        some: {
+          keywords: {
+            some: {
+              keyword: {
+                name: keywordName,
+              },
+            },
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      imgUrl: true,
+    },
+    distinct: ["id"],
+  });
+};

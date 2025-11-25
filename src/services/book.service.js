@@ -1,7 +1,7 @@
-import { findAllBooks } from "../repositories/book.repository.js";
+import { findAllBooks, findBooksByKeyword } from "../repositories/book.repository.js";
 
-export const getBooks = async () => {
-  const books = await findAllBooks();
+export const getBooks = async (keyword) => {
+  const books = keyword ? await findBooksByKeyword(keyword) : await findAllBooks();
   return Array.isArray(books)
     ? books.map((b) => ({
         id: b.id,
