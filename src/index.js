@@ -10,6 +10,7 @@ import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleLi
 import userRouter from "./routes/user.routes.js";
 import libraryRouter from "./routes/library.route.js";
 import booksRouter from "./routes/books.route.js";
+import sentencesRouter from "./routes/sentences.route.js";
 dotenv.config();
 
 const app = express()
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/library", libraryRouter)
 app.use("/api/v1/books", booksRouter);
+app.use("/api/v1/sentences", sentencesRouter);
 
 app.use(
   "/docs",
