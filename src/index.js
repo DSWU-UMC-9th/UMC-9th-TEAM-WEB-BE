@@ -8,7 +8,8 @@ import swaggerUiExpress from "swagger-ui-express";
 import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from './controllers/library.controller.js';
 
 import userRouter from "./routes/user.routes.js";
-import libraryRouter from "./routes/library.route.js"
+import libraryRouter from "./routes/library.route.js";
+import booksRouter from "./routes/books.route.js";
 dotenv.config();
 
 const app = express()
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/library", libraryRouter)
+app.use("/api/v1/books", booksRouter);
 
 app.use(
   "/docs",
