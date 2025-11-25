@@ -16,6 +16,7 @@ model User {
   updated_at DateTime? @updatedAt  @map("updated_at")
 
   userBooks UserBook[]
+  sentence  Sentence[]
   @@map("user")
 }
 
@@ -28,6 +29,8 @@ model Book {
   updatedAt DateTime  @updatedAt      @map("updated_at")
 
   userBooks UserBook[]
+  sentence  Sentence[]
+  comment   Comment[]
 
   @@map("book")  
 }
@@ -38,7 +41,6 @@ model UserBook {
   userId        String       @map("user_id")
   pageCount     Int?      @map("page_count")
   readingMinutes Int?     @map("reading_minutes")
-  sentence      String?
   note          String?
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt      @map("updated_at")
@@ -74,7 +76,32 @@ model UserBookKeyword {
   @@unique([userBookId, keywordId]) // 동일 키워드 중복 선택 방지
 }
 
+model Sentence {
+  id          Int       @id @default(autoincrement())
+  bookId      Int       @map("book_id")
+  userId      String    @map("user_id")
 
+  content     String
+
+  book        Book      @relation(fields: [bookId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  comment     Comment[]
+}
+
+model Comment {
+  id          Int       @id @default(autoincrement())
+  bookId      Int       @map("book_id")
+  sentenceId  Int       @map("sentence_id")
+
+  content     String
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt      @map("updated_at")
+
+  book        Book      @relation(fields: [bookId], references: [id])
+  sentence    Sentence  @relation(fields: [sentenceId], references: [id])
+}
 
 
 
