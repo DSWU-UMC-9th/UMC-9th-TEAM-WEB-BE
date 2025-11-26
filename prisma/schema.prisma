@@ -89,6 +89,7 @@ model Sentence {
   user        User      @relation(fields: [userId], references: [id])
 
   comment     Comment[]
+  @@map("sentence")
 }
 
 model Comment {
