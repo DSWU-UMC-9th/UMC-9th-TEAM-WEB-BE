@@ -1,5 +1,6 @@
 import express from "express";
-import { handleListComments, handleCreateComment } from "../controllers/sentence.controller.js";
+import { handleListComments } from "../controllers/sentence.controller.js";
+import { handleCreateComment } from "../controllers/comment.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
