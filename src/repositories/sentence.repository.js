@@ -41,3 +41,18 @@ export const createComment = async (sentenceId, userId, content) => {
     },
   });
 };
+
+export const findCommentById = async (commentId) => {
+  return prisma.comment.findUnique({
+    where: { id: Number(commentId) },
+  });
+};
+
+export const updateComment = async (commentId, content) => {
+  return prisma.comment.update({
+    where: { id: Number(commentId) },
+    data: {
+      content: content.trim(),
+    },
+  });
+};
