@@ -1,4 +1,4 @@
-import { HomeRepository, getTopKeywords } from "../repositories/home.repository.js";
+import { HomeRepository, getTopKeywords, findMyLibrary } from "../repositories/home.repository.js";
 
 export const HomeService = {
   async getHotSentences() {
@@ -27,5 +27,5 @@ export const getPopularKeywordsService = async () => {
 };
 
 export async function getMyLibraryService(userId) {
-  return HomeRepository.findMyLibrary(userId);
+  return findMyLibrary(userId);
 }
