@@ -43,6 +43,7 @@ model UserBook {
   userId        String    @map("user_id")
   pageCount     Int?      @map("page_count")
   readingMinutes Int?     @map("reading_minutes")
+  sentence      String?   @map("sentence")
   note          String?
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt      @map("updated_at")
@@ -50,7 +51,8 @@ model UserBook {
   // relations
   book Book @relation(fields: [bookId], references: [id])
   user User @relation(fields: [userId], references: [id])
-
+  sentence Sentence @relation(fields:[sentence], references: [content])
+  
   keywords UserBookKeyword[]
 
   @@index([bookId])
