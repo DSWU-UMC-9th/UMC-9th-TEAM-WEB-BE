@@ -1,5 +1,5 @@
 import { HomeService, getPopularKeywordsService, getMyLibraryService } from "../services/home.service.js";
-import { HotSentenceResponseDto, PopularKeywordResponseDto, BaseSuccessResponse, BaseErrorResponse } from "../dtos/home.dto.js";
+import { HotSentenceResponseDto, PopularKeywordResponseDto, MyLibraryResponseDto, BaseSuccessResponse, BaseErrorResponse } from "../dtos/home.dto.js";
 
 export async function getHot(req, res) {
   try {

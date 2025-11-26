@@ -11,7 +11,7 @@ const s3 = new S3Client({
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
     acl: 'public-read',
-    region: "ap-northeast-2"
+    region: process.env.AWS_REGION
 })
 
 const upload = multer({
