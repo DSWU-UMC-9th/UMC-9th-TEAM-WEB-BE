@@ -8,31 +8,34 @@ datasource db {
 }
 
 model User {
-  id         String   @id
-  email      String?  @db.VarChar(255)
-  pass       String?  @db.VarChar(255)
-  nickname   String?  @db.VarChar(255)
+  id         String    @id
+  email      String?   @db.VarChar(255)
+  pass       String?   @db.VarChar(255)
+  nickname   String?   @db.VarChar(255)
   created_at DateTime  @default(now()) @map("created_at")
-  updated_at DateTime? @updatedAt  @map("updated_at")
+  updated_at DateTime? @updatedAt @map("updated_at")
 
   userBooks UserBook[]
+  sentences Sentence[]
+  comments  Comment[]
+
   sentence  Sentence[]
   @@map("user")
 }
 
 model Book {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   author    String
-  imgUrl    String?   @map("img_url")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt      @map("updated_at")
+  imgUrl    String?  @map("img_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   userBooks UserBook[]
   sentence  Sentence[]
   comment   Comment[]
 
-  @@map("book")  
+  @@map("book")
 }
 
 model UserBook {
@@ -52,29 +55,29 @@ model UserBook {
 
   keywords UserBookKeyword[]
 
-  @@map("user_book")
   @@index([bookId])
   @@index([userId])
+  @@map("user_book")
 }
 
 model Keyword {
-  id      Int               @id @default(autoincrement())
-  name    String            @unique
+  id        Int               @id @default(autoincrement())
+  name      String            @unique
   userBooks UserBookKeyword[]
-  
+
   @@map("keyword")
 }
 
 model UserBookKeyword {
-  id          Int       @id @default(autoincrement())
-  userBookId  Int       @map("user_book_id")
-  keywordId   Int       @map("keyword_id")
+  id         Int @id @default(autoincrement())
+  userBookId Int @map("user_book_id")
+  keywordId  Int @map("keyword_id")
 
-  userBook    UserBook  @relation(fields: [userBookId], references: [id])
-  keyword     Keyword   @relation(fields: [keywordId], references: [id])
+  userBook UserBook @relation(fields: [userBookId], references: [id])
+  keyword  Keyword  @relation(fields: [keywordId], references: [id])
 
-  @@map("user_book_keyword")
   @@unique([userBookId, keywordId]) // 동일 키워드 중복 선택 방지
+  @@map("user_book_keyword")
 }
 
 model Sentence {
@@ -91,18 +94,18 @@ model Sentence {
 }
 
 model Comment {
-  id          Int       @id @default(autoincrement())
-  bookId      Int       @map("book_id")
-  sentenceId  Int       @map("sentence_id")
+  id         Int      @id @default(autoincrement())
+  userId     String   @map("user_id")
+  sentenceId Int      @map("sentence_id")
+  content    String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
-  content     String
+  // relations
+  user     User     @relation(fields: [userId], references: [id])
+  sentence Sentence @relation(fields: [sentenceId], references: [id])
 
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime? @updatedAt      @map("updated_at")
-
-  book        Book      @relation(fields: [bookId], references: [id])
-  sentence    Sentence  @relation(fields: [sentenceId], references: [id])
+  @@index([userId])
+  @@index([sentenceId])
+  @@map("comment")
 }
-
-
-
