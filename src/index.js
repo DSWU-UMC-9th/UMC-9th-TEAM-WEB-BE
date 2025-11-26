@@ -5,10 +5,11 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import swaggerAutogen from "swagger-autogen";
 import swaggerUiExpress from "swagger-ui-express";
-import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from './controllers/library.controller.js';
 
 import userRouter from "./routes/user.routes.js";
-import libraryRouter from "./routes/library.route.js"
+import libraryRouter from "./routes/library.route.js";
+import booksRouter from "./routes/books.route.js";
+import sentencesRouter from "./routes/sentences.route.js";
 import homeRouter from "./routes/home.route.js";
 
 dotenv.config();
@@ -25,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/library", libraryRouter)
+app.use("/api/v1/books", booksRouter);
+app.use("/api/v1/sentences", sentencesRouter);
 app.use("/api/v1/home", homeRouter);
 
 app.use(

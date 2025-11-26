@@ -1,4 +1,5 @@
 import { getAllUserBooks, getUserBookById, updateUserBookBase, createUserBook, deleteUserBook, createBook, findBookByTitleAndAuthor, deleteKeywordsByUserBookId, createKeywordsForUserBook } from "../repositories/userBook.repository.js";
+import { createSentence } from "../repositories/sentence.repository.js";
 
 export const listMyLibrary = async (userId) => {
     const list = await getAllUserBooks(userId);
@@ -32,6 +33,16 @@ export const createMyBook = async (userId, dto) => {
     }
     const created = await createUserBook(userId, book.id, dto);
 
+    // 만약 사용자가 문장(인상 깊은 문장)을 입력했다면 sentence 테이블에도 추가
+    if (dto.sentence) {
+        try {
+            await createSentence(book.id, userId, dto.sentence);
+        } catch (err) {
+            // sentence 생성 실패는 전체 흐름을 막지 않도록 로그 후 무시
+            console.error("Failed to create sentence record:", err);
+        }
+    }
+
     return created;
 }
 
@@ -47,7 +58,6 @@ export const updateMyBook = async (userId, userBookId, dto) => {
     if (dto.pageCount !== undefined) baseData.pageCount = dto.pageCount;
     if (dto.readingMinutes !== undefined)
         baseData.readingMinutes = dto.readingMinutes;
-    if (dto.sentence !== undefined) baseData.sentence = dto.sentence;
     if (dto.note !== undefined) baseData.note = dto.note;
 
     // 1) 기본 정보 업데이트

@@ -33,6 +33,7 @@ export const createUserBook = async (userId, bookId, dto) => {
         data:{
             userId,
             bookId,
+            userBookImg: dto.imgUrl,
             pageCount,
             readingMinutes,
             sentence,
