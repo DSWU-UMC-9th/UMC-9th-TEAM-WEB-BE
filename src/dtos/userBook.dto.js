@@ -11,11 +11,11 @@ export const bodyToCreateUserBook = (data, imgUrl) => {
     imgUrl: imgUrl ?? null,
     pageCount: data.pageCount ? Number(data.pageCount) : null,
     readingMinutes: data.readingMinutes ? Number(data.readingMinutes) : null,
-    sentence: data.sentence ?? null,
     note: data.note ?? null,
     keywordIds: Array.isArray(data.keywords)
       ? data.keywords.map((id) => Number(id))
       : [], // 없으면 빈 배열
+    sentence: data.sentence ?? null,
   };
 };
 
@@ -27,7 +27,6 @@ export const bodyToUpdateUserBook = (data) => {
       data.readingMinutes !== undefined
         ? Number(data.readingMinutes)
         : undefined,
-    sentence: data.sentence !== undefined ? data.sentence : undefined,
     note: data.note !== undefined ? data.note : undefined,
     keywordIds:
       data.keywords !== undefined ? toKeywordIds(data.keywords) : undefined,
@@ -51,7 +50,6 @@ export const userBookDetailToResponse = (userBook) => {
     userBookImg: userBook.userBookImg,
     pageCount: userBook.pageCount,
     readingMinutes: userBook.readingMinutes,
-    sentence: userBook.sentence,
     note: userBook.note,
     keywords: Array.isArray(userBook.keywords)
       ? userBook.keywords.map((ubk) => ({

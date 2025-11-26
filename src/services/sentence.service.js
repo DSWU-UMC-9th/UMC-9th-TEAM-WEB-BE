@@ -4,11 +4,11 @@ export const getCommentsForSentence = async (sentenceId) => {
   const sentence = await findSentenceWithComments(sentenceId);
   if (!sentence) return null;
 
-  const comments = Array.isArray(sentence.comments)
+  const comments = Array.isArray(sentence.comment)
     ? (() => {
         const map = new Map();
         let idx = 1;
-        return sentence.comments.map((c) => {
+        return sentence.comment.map((c) => {
           const uid = c.userId ?? `__anon_${c.id}`;
           if (!map.has(uid)) {
             map.set(uid, `익명${idx}`);

@@ -17,7 +17,7 @@ export const findSentenceWithComments = async (sentenceId) => {
     select: {
       id: true,
       content: true,
-      comments: {
+      comment: {
         select: {
           id: true,
           content: true,

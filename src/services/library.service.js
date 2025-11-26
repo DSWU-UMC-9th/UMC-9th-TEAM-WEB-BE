@@ -58,7 +58,6 @@ export const updateMyBook = async (userId, userBookId, dto) => {
     if (dto.pageCount !== undefined) baseData.pageCount = dto.pageCount;
     if (dto.readingMinutes !== undefined)
         baseData.readingMinutes = dto.readingMinutes;
-    if (dto.sentence !== undefined) baseData.sentence = dto.sentence;
     if (dto.note !== undefined) baseData.note = dto.note;
 
     // 1) 기본 정보 업데이트

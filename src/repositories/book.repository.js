@@ -41,7 +41,7 @@ export const findBookWithRelations = async (bookId) => {
   return prisma.book.findUnique({
     where: { id: Number(bookId) },
     include: {
-      sentences: {
+      sentence: {
         select: { id: true, content: true },
         orderBy: { id: 'asc' },
       },

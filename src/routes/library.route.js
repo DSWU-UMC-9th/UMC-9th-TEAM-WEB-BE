@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get("", handleListUserBooks)
-router.post("", upload, handleAddUserBook)
+router.post("", upload.single("image"), handleAddUserBook)
 router.get("/:userBookId", handleDetailUserBook)
 router.patch("/:userBookId", handleUpdateUserBook)
 router.delete("/:userBookId", handleDeleteUserBook)
