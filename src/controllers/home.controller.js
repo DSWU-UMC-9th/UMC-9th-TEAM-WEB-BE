@@ -24,3 +24,16 @@ export async function getPopularKeywords(req, res) {
     return res.status(500).json(BaseErrorResponse("인기 키워드 조회 실패"));
   }
 }
+export async function getMyLibrary(req, res) {
+  try {
+    const userId = req.user.id;
+
+    const data = await HomeService.getMyLibraryService(userId);
+    const dto = MyLibraryResponseDto(data);
+
+    return res.json(BaseSuccessResponse(dto));
+  } catch (err) {
+    console.error("GET /api/v1/library error:", err);
+    return res.status(500).json(BaseErrorResponse("나의 도서 목록 조회 실패"));
+  }
+}

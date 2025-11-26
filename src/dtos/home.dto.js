@@ -29,3 +29,15 @@ export function PopularKeywordResponseDto(keywords) {
     sentenceCount: k.sentenceCount
   }));
 }
+
+export function MyLibraryResponseDto(library) {
+  return library.map(item => ({
+    id: item.id,
+    book: {
+      id: item.book.id,
+      title: item.book.title,
+      author: item.book.author,
+      imgUrl: item.book.imgUrl
+    }
+  }));
+}

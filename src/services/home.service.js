@@ -25,3 +25,7 @@ export const getPopularKeywordsService = async () => {
     name: k.keywordName
   }));
 };
+
+export async function getMyLibraryService(userId) {
+  return HomeRepository.findMyLibrary(userId);
+}
