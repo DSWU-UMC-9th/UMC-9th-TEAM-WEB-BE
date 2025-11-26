@@ -1,4 +1,4 @@
-import { findSentenceWithComments, createComment, findCommentById, updateComment } from "../repositories/sentence.repository.js";
+import { findSentenceWithComments, createComment, findCommentById, updateComment, deleteComment } from "../repositories/sentence.repository.js";
 
 export const getCommentsForSentence = async (sentenceId) => {
   const sentence = await findSentenceWithComments(sentenceId);
@@ -72,5 +72,30 @@ export const updateCommentById = async (commentId, userId, content) => {
     content: updated.content,
     createdAt: updated.createdAt.toISOString(),
     updatedAt: updated.updatedAt.toISOString(),
+  };
+};
+
+export const deleteCommentById = async (commentId, userId) => {
+  // 댓글 존재 여부 확인
+  const comment = await findCommentById(commentId);
+  if (!comment) {
+    const error = new Error("해당 댓글을 찾을 수 없습니다.");
+    error.status = 404;
+    throw error;
+  }
+
+  // 작성자 본인 확인
+  if (comment.userId !== userId) {
+    const error = new Error("댓글 삭제 권한이 없습니다.");
+    error.status = 403;
+    throw error;
+  }
+
+  // 댓글 삭제
+  await deleteComment(commentId);
+  
+  return {
+    message: "댓글이 삭제되었습니다.",
+    id: commentId,
   };
 };
