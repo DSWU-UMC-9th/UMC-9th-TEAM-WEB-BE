@@ -4,11 +4,11 @@ const toKeywordIds = (keywords) => {
 };
 
 // create용
-export const bodyToCreateUserBook = (data) => {
+export const bodyToCreateUserBook = (data, imgUrl) => {
   return {
     title: data.title?.trim(),
     author: data.author?.trim(),
-    imgUrl: data.imgUrl ?? null,
+    imgUrl: imgUrl ?? null,
     pageCount: data.pageCount ? Number(data.pageCount) : null,
     readingMinutes: data.readingMinutes ? Number(data.readingMinutes) : null,
     sentence: data.sentence ?? null,
@@ -48,6 +48,7 @@ export const userBookDetailToResponse = (userBook) => {
           imgUrl: userBook.book.imgUrl ?? null,
         }
       : null,
+    userBookImg: userBook.userBookImg,
     pageCount: userBook.pageCount,
     readingMinutes: userBook.readingMinutes,
     sentence: userBook.sentence,

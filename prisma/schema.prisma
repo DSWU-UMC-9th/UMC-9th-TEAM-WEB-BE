@@ -19,6 +19,7 @@ model User {
   sentences Sentence[]
   comments  Comment[]
 
+  sentence  Sentence[]
   @@map("user")
 }
 
@@ -31,21 +32,22 @@ model Book {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   userBooks UserBook[]
-  sentences Sentence[]
+  sentence  Sentence[]
+  comment   Comment[]
 
   @@map("book")
 }
 
 model UserBook {
-  id             Int      @id @default(autoincrement())
-  bookId         Int      @map("book_id")
-  userId         String   @map("user_id")
-  pageCount      Int?     @map("page_count")
+  id            Int       @id @default(autoincrement())
+  bookId        Int       @map("book_id")
+  userBookImg   String?   @map("img_url")
+  userId        String    @map("user_id")
+  pageCount     Int?      @map("page_count")
   readingMinutes Int?     @map("reading_minutes")
-  sentence       String?
-  note           String?
-  createdAt      DateTime @default(now()) @map("created_at")
-  updatedAt      DateTime @updatedAt @map("updated_at")
+  note          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt      @map("updated_at")
 
   // relations
   book Book @relation(fields: [bookId], references: [id])
@@ -79,19 +81,16 @@ model UserBookKeyword {
 }
 
 model Sentence {
-  id      Int     @id @default(autoincrement())
-  bookId  Int     @map("book_id")
-  userId  String  @map("user_id")
-  content String?
+  id          Int       @id @default(autoincrement())
+  bookId      Int       @map("book_id")
+  userId      String    @map("user_id")
 
-  // relations
-  book     Book      @relation(fields: [bookId], references: [id])
-  user     User      @relation(fields: [userId], references: [id])
-  comments Comment[]
+  content     String
 
-  @@index([bookId])
-  @@index([userId])
-  @@map("sentence")
+  book        Book      @relation(fields: [bookId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  comment     Comment[]
 }
 
 model Comment {
