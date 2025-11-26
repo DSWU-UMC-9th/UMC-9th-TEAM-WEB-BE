@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import swaggerAutogen from "swagger-autogen";
 import swaggerUiExpress from "swagger-ui-express";
-import { handleAddUserBook, handleDeleteUserBook, handleDetailUserBook, handleListUserBooks, handleUpdateUserBook } from './controllers/library.controller.js';
 
 import userRouter from "./routes/user.routes.js";
 import libraryRouter from "./routes/library.route.js"
