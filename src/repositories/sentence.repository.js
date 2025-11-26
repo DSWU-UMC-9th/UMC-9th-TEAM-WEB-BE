@@ -30,3 +30,14 @@ export const findSentenceWithComments = async (sentenceId) => {
     },
   });
 };
+
+export const createComment = async (sentenceId, userId, content) => {
+  if (!content || !content.trim()) return null;
+  return prisma.comment.create({
+    data: {
+      sentenceId: Number(sentenceId),
+      userId,
+      content: content.trim(),
+    },
+  });
+};
