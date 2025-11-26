@@ -36,7 +36,6 @@ export const createUserBook = async (userId, bookId, dto) => {
             userBookImg: dto.imgUrl,
             pageCount,
             readingMinutes,
-            sentence,
             note,
             keywords: {
                 create: (keywordIds || []).map((kId) => ({
