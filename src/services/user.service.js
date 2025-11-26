@@ -92,4 +92,23 @@ export const login = async (email, password) => {
         },
     };
 };
+export const checkNickname = async (nickname) => {
+    if (!nickname || nickname.trim() === "") {
+        throw new Error("닉네임이 입력되지 않았습니다.");
+    }
+
+    const existsNickname = await findUserByNickname(nickname);
+
+    if (existsNickname) {
+        return {
+            isAvailable: false,
+            message: "이미 사용 중인 닉네임입니다."
+        };
+    }
+
+    return {
+        isAvailable: true,
+        message: "사용 가능한 닉네임입니다."
+    };
+};
 
