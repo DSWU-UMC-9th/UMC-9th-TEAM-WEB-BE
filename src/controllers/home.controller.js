@@ -1,4 +1,4 @@
-import { HomeService, getPopularKeywordsService } from "../services/home.service.js";
+import { HomeService, getPopularKeywordsService, getMyLibraryService } from "../services/home.service.js";
 import { HotSentenceResponseDto, PopularKeywordResponseDto, BaseSuccessResponse, BaseErrorResponse } from "../dtos/home.dto.js";
 
 export async function getHot(req, res) {
@@ -28,7 +28,7 @@ export async function getMyLibrary(req, res) {
   try {
     const userId = req.user.id;
 
-    const data = await HomeService.getMyLibraryService(userId);
+    const data = await getMyLibraryService(userId);
     const dto = MyLibraryResponseDto(data);
 
     return res.json(BaseSuccessResponse(dto));
