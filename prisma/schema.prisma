@@ -16,10 +16,9 @@ model User {
   updated_at DateTime? @updatedAt @map("updated_at")
 
   userBooks UserBook[]
-  sentences Sentence[]
-  comments  Comment[]
-
+  comment  Comment[]
   sentence  Sentence[]
+
   @@map("user")
 }
 
@@ -33,7 +32,6 @@ model Book {
 
   userBooks UserBook[]
   sentence  Sentence[]
-  comment   Comment[]
 
   @@map("book")
 }

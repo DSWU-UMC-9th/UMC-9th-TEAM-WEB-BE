@@ -28,8 +28,8 @@ export const getBookDetail = async (bookId) => {
   }
 
   const keywords = Array.from(kwSet);
-  const sentences = Array.isArray(book.sentences)
-    ? book.sentences.map((s) => ({ id: s.id, content: s.content }))
+  const sentences = Array.isArray(book.sentence)
+    ? book.sentence.map((s) => ({ id: s.id, content: s.content }))
     : [];
 
   return {
