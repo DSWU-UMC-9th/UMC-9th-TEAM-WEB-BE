@@ -45,3 +45,21 @@ export const getTopKeywords = async () => {
   `;
   return result;
 };
+
+export async function findMyLibrary(userId) {
+  return prisma.userBook.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      book: {
+        select: {
+          id: true,
+          title: true,
+          author: true,
+          imgUrl: true
+        }
+      }
+    },
+    orderBy: { id: "desc" }
+  });
+}
