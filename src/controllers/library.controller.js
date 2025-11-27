@@ -4,7 +4,6 @@ import { bodyToCreateUserBook, bodyToUpdateUserBook, userBookDetailToResponse, u
 
 export const handleAddUserBook = async (req, res, next) => {
   try {
-    console.log(req.body);
     const userId = req.user.id;
     if (!userId) throw new Error("userId가 필요합니다.");
     
@@ -39,7 +38,7 @@ export const handleAddUserBook = async (req, res, next) => {
     const dto = bodyToCreateUserBook(bookObject, imgUrl);
 
     const created = await createMyBook(userId, dto);
-    return res.status(StatusCodes.CREATED).json(userBookDetailToResponse(created));
+    return res.status(StatusCodes.CREATED).json(created);
   } catch (err) {
     next(err);
   }
@@ -64,7 +63,7 @@ export const handleDetailUserBook = async (req, res, next) => {
         if (!userBookId) throw new Error("userBookId가 필요합니다.");
 
         const detail = await detailMyBook(userId, userBookId);
-        return res.status(StatusCodes.OK).json(userBookDetailToResponse(detail));
+        return res.status(StatusCodes.OK).json(detail);
     }catch(err){
         next(err)
     }
@@ -93,7 +92,7 @@ export const handleUpdateUserBook = async (req, res, next) => {
         const updated = await updateMyBook(userId, userBookId, dto);
         return res
         .status(StatusCodes.OK)
-        .json(userBookDetailToResponse(updated));
+        .json(updated);
     } catch (err) {
         next(err);
     }

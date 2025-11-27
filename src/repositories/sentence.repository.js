@@ -30,3 +30,27 @@ export const findSentenceWithComments = async (sentenceId) => {
     },
   });
 };
+
+export const findSentenceByUserIdAndBookId = async (userId, bookId) => {
+  return prisma.sentence.findFirst({
+    where: {
+      userId,
+      bookId
+    },
+    select:{
+      id: true,
+      content: true,
+    }
+  })
+}
+
+export const updateSentenceById = async (id, newContent) => {
+  return prisma.sentence.update({
+      where: {
+        id,
+      },
+      data: {
+        content: newContent, // content 필드에 새로운 값을 설정
+      },
+    });
+}

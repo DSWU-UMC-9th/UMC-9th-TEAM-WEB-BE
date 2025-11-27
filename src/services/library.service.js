@@ -1,5 +1,6 @@
 import { getAllUserBooks, getUserBookById, updateUserBookBase, createUserBook, deleteUserBook, createBook, findBookByTitleAndAuthor, deleteKeywordsByUserBookId, createKeywordsForUserBook } from "../repositories/userBook.repository.js";
-import { createSentence } from "../repositories/sentence.repository.js";
+import { createSentence, findSentenceByUserIdAndBookId, updateSentenceById } from "../repositories/sentence.repository.js";
+import { userBookDetailToResponse } from "../dtos/userBook.dto.js";
 
 export const listMyLibrary = async (userId) => {
     const list = await getAllUserBooks(userId);
@@ -8,12 +9,16 @@ export const listMyLibrary = async (userId) => {
 
 export const detailMyBook = async (userId, userBookId) => {
     const book = await getUserBookById(userBookId);
+    
     if(!book){
         const error = new Error("나의 서재에 해당 도서가 없습니다.");
         error.status = 404;
         throw error;
     }
-    return book;
+
+    const sentence = await findSentenceByUserIdAndBookId(userId, book.bookId);
+    
+    return userBookDetailToResponse(book, sentence.content);
 }
 
 export const createMyBook = async (userId, dto) => {
@@ -43,7 +48,9 @@ export const createMyBook = async (userId, dto) => {
         }
     }
 
-    return created;
+    const sentence = await findSentenceByUserIdAndBookId(userId, book.id);
+   
+    return userBookDetailToResponse(created, sentence.content);
 }
 
 export const updateMyBook = async (userId, userBookId, dto) => {
@@ -53,6 +60,13 @@ export const updateMyBook = async (userId, userBookId, dto) => {
         error.status = 404;
         throw error;
     }
+    
+    const newSentence = dto.sentence;
+    if(newSentence  !== undefined ){
+        const sentence = await findSentenceByUserIdAndBookId(userId, existing.bookId);
+        const temp = updateSentenceById(sentence.id, newSentence);
+    }
+
     // 기본 필드 업데이트 데이터 구성
     const baseData = {};
     if (dto.pageCount !== undefined) baseData.pageCount = dto.pageCount;
@@ -70,8 +84,11 @@ export const updateMyBook = async (userId, userBookId, dto) => {
     }
 
     // 3) 최종 결과 다시 조회
-    const result = await getUserBookById(userBookId, userId);
-    return result;
+    const result = await getUserBookById(userBookId);
+    const sentence = await findSentenceByUserIdAndBookId(userId, existing.bookId);
+    const sentenceContent = sentence ? sentence.content : null;
+
+    return userBookDetailToResponse(result, sentenceContent);
 }
 
 export const deleteMyBook = async (userId, userBookId) => {
