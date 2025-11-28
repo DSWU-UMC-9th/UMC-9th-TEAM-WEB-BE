@@ -20,7 +20,10 @@ const port = process.env.PORT;
 
 app.use(morgan('dev'));
 app.use(cookieParser()); 
-app.use(cors()); 
+app.use(cors({
+  origin: ['https://umc-9th-team-web-fe.vercel.app/'],
+  credentials: true
+}));
 app.use(express.static('public'));
 app.use(express.json());                 
 app.use(express.urlencoded({ extended: false }));
