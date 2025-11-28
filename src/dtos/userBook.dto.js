@@ -28,13 +28,14 @@ export const bodyToUpdateUserBook = (data) => {
         ? Number(data.readingMinutes)
         : undefined,
     note: data.note !== undefined ? data.note : undefined,
+    sentence: data.sentence !== undefined ? data.sentence : undefined,
     keywordIds:
       data.keywords !== undefined ? toKeywordIds(data.keywords) : undefined,
     }
 }
 
 // 상세 응답 DTO
-export const userBookDetailToResponse = (userBook) => {
+export const userBookDetailToResponse = (userBook, sentence) => {
   if (!userBook) return null;
 
   return {
@@ -50,6 +51,7 @@ export const userBookDetailToResponse = (userBook) => {
     userBookImg: userBook.userBookImg,
     pageCount: userBook.pageCount,
     readingMinutes: userBook.readingMinutes,
+    sentence: sentence,
     note: userBook.note,
     keywords: Array.isArray(userBook.keywords)
       ? userBook.keywords.map((ubk) => ({
