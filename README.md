@@ -7,7 +7,7 @@
 
 | 김가윤 | 박현지 | 이혜린 | 하늘새미 |
 |:---:|:---:|:---:|:---:|
-| <img src="https://github.com/JCTA0125.png" width="150" height="150"> | <img src="https://github.com/guswlwlgus.png" width="150" height="150"> | <img src="https://github.com/whathehyell.png" width="150" height="150"> | <img src="https://github.com/haneulsaemi.png" width="150" height="150"> |
+| <img src="https://github.com/JCTA0125.png" width="150" height="150"> | <img src="https://github.com/park-hyunji.png" width="150" height="150"> | <img src="https://github.com/whathehyell.png" width="150" height="150"> | <img src="https://github.com/haneulsaemi.png" width="150" height="150"> |
 | [@JCTA0125](https://github.com/JCTA0125) | [@guswlwlgus](https://github.com/guswlwlgus) | [@whathehyell](https://github.com/whathehyell) | [@haneulsaemi](https://github.com/haneulsaemi) |
 
 ---
